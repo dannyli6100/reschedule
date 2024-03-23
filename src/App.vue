@@ -1,85 +1,94 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <Header />
+  <div class="app-container">
+    <div class="container">
+      <div class="column">
+        <div class="form-container">
+          <ScribeInput />
+        </div>
+        <div class="select-view">
+          <ScribeView
+            v-for="(scribe) in scribeList"
+           :name="scribe.name"
+           :hoursPerWeek="scribe.hoursPerWeek"
+           :availabilityMonday="scribe.availability[0].avail"
+           :availabilityTuesday="scribe.availability[1].avail"
+           :availabilityWednesday="scribe.availability[2].avail"
+           :availabilityThursday="scribe.availability[3].avail"
+           :availabilityFriday="scribe.availability[4].avail"
+           :id="scribe.id">
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+          </ScribeView>
+        </div>
+      </div>
+      <div class="column">
+        <ProviderInput />
+      </div>
     </div>
-  </header>
+  </div>
 
-  <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script setup>
+import Header from './components/Header.vue';
+import ProviderInput from './components/ProviderInput.vue';
+import ScribeInput from './components/ScribeInput.vue';
+import ScribeView from './components/ScribeView.vue';
+import { uid } from 'uid';
+import { ref } from 'vue'
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+// creating our arrays to hold scribe and provider objects
+const scribeList = ref([
+  {
+    name: "Danny",
+    hoursPerWeek: 32,
+    id: uid(),
+    availability: [
+      {day: "monday", avail: "12:00pm - 4:00pm"},
+      {day: "tuesday", avail: "12:00pm - 4:00pm"},
+      {day: "wednesday", avail: "12:00pm - 4:00pm"},
+      {day: "thursday", avail: "12:00pm - 4:00pm"},
+      {day: "friday", avail: "12:00pm - 4:00pm"},
+    ]
+  },
+  {
+    name: "Jieleen",
+    hoursPerWeek: 32,
+    id: uid(),
+    availability: [
+      {day: "monday", avail: "12:00pm - 4:00pm"},
+      {day: "tuesday", avail: "12:00pm - 4:00pm"},
+      {day: "wednesday", avail: "12:00pm - 4:00pm"},
+      {day: "thursday", avail: "12:00pm - 4:00pm"},
+      {day: "friday", avail: "12:00pm - 4:00pm"},
+    ]
+  }
+])
 
-nav {
+const providerList = ref([])
+
+// creating a new scribe to add to list
+
+// creating a new provider to add to list
+
+// creating a edit/deletion function
+
+</script>
+
+<style lang="scss" scoped>
+.app-container {
+  display: flex;
+  flex: 1;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.form-container {
+  flex: 1;
+  max-width: 350px;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.select-view {
+  flex: 1;
+  max-width: 350px;
 }
 </style>
