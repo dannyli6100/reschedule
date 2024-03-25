@@ -16,8 +16,8 @@
            :availabilityWednesday="scribe.availability[2].avail"
            :availabilityThursday="scribe.availability[3].avail"
            :availabilityFriday="scribe.availability[4].avail"
-           :id="scribe.id">
-
+           :id="scribe.id"
+            v-on:deleteItem="deleteScribe">
           </ScribeView>
         </div>
       </div>
@@ -62,6 +62,30 @@ const scribeList = ref([
       {day: "thursday", avail: "12:00pm - 4:00pm"},
       {day: "friday", avail: "12:00pm - 4:00pm"},
     ]
+  },
+  {
+    name: "Jieleen",
+    hoursPerWeek: 32,
+    id: uid(),
+    availability: [
+      {day: "monday", avail: "12:00pm - 4:00pm"},
+      {day: "tuesday", avail: "12:00pm - 4:00pm"},
+      {day: "wednesday", avail: "12:00pm - 4:00pm"},
+      {day: "thursday", avail: "12:00pm - 4:00pm"},
+      {day: "friday", avail: "12:00pm - 4:00pm"},
+    ]
+  },
+  {
+    name: "Jieleen",
+    hoursPerWeek: 32,
+    id: uid(),
+    availability: [
+      {day: "monday", avail: "12:00pm - 4:00pm"},
+      {day: "tuesday", avail: "12:00pm - 4:00pm"},
+      {day: "wednesday", avail: "12:00pm - 4:00pm"},
+      {day: "thursday", avail: "12:00pm - 4:00pm"},
+      {day: "friday", avail: "12:00pm - 4:00pm"},
+    ]
   }
 ])
 
@@ -72,6 +96,12 @@ const providerList = ref([])
 // creating a new provider to add to list
 
 // creating a edit/deletion function
+const deleteScribe = (id) => {
+  const index = scribeList.value.findIndex(scribe => scribe.id === id)
+  if (index !== -1) {
+    scribeList.value.splice(index, 1)
+  }
+}
 
 </script>
 
