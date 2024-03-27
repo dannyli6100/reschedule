@@ -23,7 +23,23 @@
         </div>
       </div>
       <div class="column">
-        <ProviderInput />
+        <div class="form-container">
+          <ProviderInput :providerList="providerList" @submitProvider="addProvider"/>
+        </div>
+        <div class="select-view">
+          <ProviderView
+            v-for="(provider) in providerList"
+            :name="provider.name"
+            :mondayHours="provider.hoursPerDay[0].hours"
+            :tuesdayHours="provider.hoursPerDay[1].hours"
+            :wednesdayHours="provider.hoursPerDay[2].hours"
+            :thursdayHours="provider.hoursPerDay[3].hours"
+            :fridayHours="provider.hoursPerDay[4].hours"
+            :id="provider.id"
+            :provider="provider"
+            v-on:deleteItem="deleteProvider">
+          </ProviderView>
+        </div>
       </div>
     </div>
   </div>
@@ -33,6 +49,7 @@
 <script setup>
 import Header from './components/Header.vue';
 import ProviderInput from './components/ProviderInput.vue';
+import ProviderView from './components/ProviderView.vue';
 import ScribeInput from './components/ScribeInput.vue';
 import ScribeView from './components/ScribeView.vue';
 import { uid } from 'uid';
@@ -50,6 +67,10 @@ const addScribe = (newScribe) => {
 }
 
 // creating a new provider to add to list
+const addProvider = (newProvider) => {
+  newProvider.id = uid()
+  providerList.value.push(newProvider)
+}
 
 // creating a edit/deletion function
 const deleteScribe = (id) => {
@@ -59,6 +80,12 @@ const deleteScribe = (id) => {
   }
 }
 
+const deleteProvider = (id) => {
+  const index = providerList.value.findIndex(provider => provider.id === id)
+  if (index !== -1) {
+    providerList.value.splice(index, 1)
+  }
+}
 
 </script>
 
@@ -72,12 +99,12 @@ const deleteScribe = (id) => {
 
 .form-container {
   flex: 1;
-  max-width: 350px;
+  max-width: 375px;
 }
 
 .select-view {
   flex: 1;
-  max-width: 350px;
+  max-width: 375px;
   height: 100%;
   overflow-y: scroll;
 }
