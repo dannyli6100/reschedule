@@ -1,5 +1,5 @@
 <template>
-    <form id="form" class="form">
+    <form @submit="submitScribe" id="form" class="form">
         <p>Time in format HH:MM(am/pm) - HH:MM(am/pm)</p>
         <div class="form-element">
             <label for="scribeName">Name</label>
@@ -34,10 +34,39 @@
 </template>
 
 <script setup>
+import { ref, defineEmits, defineProps } from 'vue'
+import { uid } from 'uid'
 
-/*function submitScribe() => {
-    @click="submitScribe" on button ^
-} */
+const props = defineProps(['scribeList'])
+const emit = defineEmits(['submitScribe'])
+
+const submitScribe = (event) => {
+    event.preventDefault()
+
+    const scribeName = document.getElementById('scribeName').value
+    const hoursPerWeek = document.getElementById('hours').value
+    const mondayAvailability = document.getElementById('monday-avail').value
+    const tuesdayAvailability = document.getElementById('tuesday-avail').value
+    const wednesdayAvailability = document.getElementById('wednesday-avail').value
+    const thursdayAvailability = document.getElementById('thursday-avail').value
+    const fridayAvailability = document.getElementById('friday-avail').value
+
+    const newScribe = {
+        id: uid(),
+        name: scribeName,
+        hoursPerWeek: hoursPerWeek,
+        availability: [
+            { day: 'Monday', avail: mondayAvailability },
+            { day: 'Tuesday', avail: tuesdayAvailability },
+            { day: 'Wednesday', avail: wednesdayAvailability },
+            { day: 'Thursday', avail: thursdayAvailability },
+            { day: 'Friday', avail: fridayAvailability },
+        ]
+    }
+
+    emit('submitScribe', newScribe)
+}
+
 </script>
 
 <style lang="scss" scoped>

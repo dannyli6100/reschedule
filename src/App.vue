@@ -4,7 +4,7 @@
     <div class="container">
       <div class="column">
         <div class="form-container">
-          <ScribeInput />
+          <ScribeInput :scribeList="scribeList" @submitScribe="addScribe" />
         </div>
         <div class="select-view">
           <ScribeView
@@ -17,6 +17,7 @@
            :availabilityThursday="scribe.availability[3].avail"
            :availabilityFriday="scribe.availability[4].avail"
            :id="scribe.id"
+           :scribe="scribe"
             v-on:deleteItem="deleteScribe">
           </ScribeView>
         </div>
@@ -38,60 +39,15 @@ import { uid } from 'uid';
 import { ref } from 'vue'
 
 // creating our arrays to hold scribe and provider objects
-const scribeList = ref([
-  {
-    name: "Danny",
-    hoursPerWeek: 32,
-    id: uid(),
-    availability: [
-      {day: "monday", avail: "12:00pm - 4:00pm"},
-      {day: "tuesday", avail: "12:00pm - 4:00pm"},
-      {day: "wednesday", avail: "12:00pm - 4:00pm"},
-      {day: "thursday", avail: "12:00pm - 4:00pm"},
-      {day: "friday", avail: "12:00pm - 4:00pm"},
-    ]
-  },
-  {
-    name: "Jieleen",
-    hoursPerWeek: 32,
-    id: uid(),
-    availability: [
-      {day: "monday", avail: "12:00pm - 4:00pm"},
-      {day: "tuesday", avail: "12:00pm - 4:00pm"},
-      {day: "wednesday", avail: "12:00pm - 4:00pm"},
-      {day: "thursday", avail: "12:00pm - 4:00pm"},
-      {day: "friday", avail: "12:00pm - 4:00pm"},
-    ]
-  },
-  {
-    name: "Jieleen",
-    hoursPerWeek: 32,
-    id: uid(),
-    availability: [
-      {day: "monday", avail: "12:00pm - 4:00pm"},
-      {day: "tuesday", avail: "12:00pm - 4:00pm"},
-      {day: "wednesday", avail: "12:00pm - 4:00pm"},
-      {day: "thursday", avail: "12:00pm - 4:00pm"},
-      {day: "friday", avail: "12:00pm - 4:00pm"},
-    ]
-  },
-  {
-    name: "Jieleen",
-    hoursPerWeek: 32,
-    id: uid(),
-    availability: [
-      {day: "monday", avail: "12:00pm - 4:00pm"},
-      {day: "tuesday", avail: "12:00pm - 4:00pm"},
-      {day: "wednesday", avail: "12:00pm - 4:00pm"},
-      {day: "thursday", avail: "12:00pm - 4:00pm"},
-      {day: "friday", avail: "12:00pm - 4:00pm"},
-    ]
-  }
-])
+const scribeList = ref([])
 
 const providerList = ref([])
 
 // creating a new scribe to add to list
+const addScribe = (newScribe) => {
+  newScribe.id = uid()
+  scribeList.value.push(newScribe)
+}
 
 // creating a new provider to add to list
 
@@ -103,6 +59,7 @@ const deleteScribe = (id) => {
   }
 }
 
+
 </script>
 
 <style lang="scss" scoped>
@@ -110,6 +67,7 @@ const deleteScribe = (id) => {
   display: flex;
   flex: 1;
   width: 100%;
+  height: 886px;
 }
 
 .form-container {
@@ -120,5 +78,8 @@ const deleteScribe = (id) => {
 .select-view {
   flex: 1;
   max-width: 350px;
+  height: 100%;
+  overflow-y: scroll;
 }
+
 </style>
