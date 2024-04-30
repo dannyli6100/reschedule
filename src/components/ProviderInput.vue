@@ -1,5 +1,5 @@
 <template>
-    <form id="form" class="form">
+    <form @submit="submitProvider" id="form" class="form">
         <p>Time in format HH:MM(am/pm) - HH:MM(am/pm)</p>
         <div class="form-element">
             <label for="providerName">Name</label>
@@ -30,6 +30,36 @@
 </template>
 
 <script setup>
+import { ref, defineEmits, defineProps } from 'vue'
+import { uid } from 'uid'
+
+const props = defineProps(['providerList'])
+const emit = defineEmits(['submitProvider'])
+
+const submitProvider = (event) => {
+    event.preventDefault()
+
+    const providerName = document.getElementById('providerName').value
+    const mondayHours = document.getElementById('monday-hours').value
+    const tuesdayHours = document.getElementById('tuesday-hours').value
+    const wednesdayHours = document.getElementById('wednesday-hours').value
+    const thursdayHours = document.getElementById('thursday-hours').value
+    const fridayHours = document.getElementById('friday-hours').value
+
+    const newProvider = {
+        id: uid(),
+        name: providerName,
+        hoursPerDay: [
+            { day: 'Monday', hours: mondayHours },
+            { day: 'Tuesday', hours: tuesdayHours },
+            { day: 'Wednesday', hours: wednesdayHours },
+            { day: 'Thursday', hours: thursdayHours },
+            { day: 'Friday', hours: fridayHours },
+        ]
+    }
+
+    emit('submitProvider', newProvider)
+}
 
 </script>
 

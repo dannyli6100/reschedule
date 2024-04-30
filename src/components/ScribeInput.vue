@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, defineProps } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 import { uid } from 'uid'
 
 const props = defineProps(['scribeList'])

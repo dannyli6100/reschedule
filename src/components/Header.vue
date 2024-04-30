@@ -4,14 +4,14 @@
             <p>For Darling</p>
             <ul class="nav-routes">
                 <RouterLink :to="{name: 'home'}">Home</RouterLink>
-                <!-- routerLink to calendar-->
+                <RouterLink :to="{name: 'schedule', path: '/schedule'}">Schedule</RouterLink>
             </ul>
         </nav>
     </header>
 </template>
 
 <script setup>
-//import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 </script>
 
 <style lang="scss" scoped>
